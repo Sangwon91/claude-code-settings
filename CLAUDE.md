@@ -45,6 +45,7 @@ Modifying too large amounts of code makes it impossible to track how the code is
 ### Technology Stack Guidelines
 - **React + TypeScript + Vite**: @guides/technology-stacks/react+typescript+vite.md
 - **React + TypeScript + Vite + shadcn/ui**: @guides/technology-stacks/react+typescript+vite+shadcn-ui.md
+- **React + TypeScript + Vite + Playwright**: @guides/technology-stacks/react+typescript+vite+playwright.md
 - **uv + pytest**: @guides/technology-stacks/uv+pytest.md
 
 ## 🛠️ Technology Stack Management
