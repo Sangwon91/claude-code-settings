@@ -4,13 +4,14 @@
 
 ## Usage
 ```
-/research:tech-stack <technology-stack> [--template=<template-type>] [--context=<context-stack>]
+/research:tech-stack <technology-stack> [--template=<template-type>] [--context=<context-stack>] [additional natural language requirements]
 ```
 
 ## Parameters
 - `technology-stack`: 조사할 기술 스택 (단일 또는 조합, + 구분자 사용)
 - `--template`: 템플릿 타입 (선택: spa, fullstack, api, library)
 - `--context`: 특정 컨텍스트에서의 사용법 조사 (선택)
+- `additional natural language requirements`: 자연어로 추가 요구사항 명시 (선택)
 
 ## Examples
 ```bash
@@ -26,6 +27,11 @@
 
 # 특정 컨텍스트에서의 사용법
 /research:tech-stack zustand --context=react+typescript
+
+# 자연어 추가 요구사항
+/research:tech-stack react+typescript+vite focus on testing strategies and CI/CD integration
+/research:tech-stack nextjs+prisma --template=fullstack include deployment to Vercel and database migrations
+/research:tech-stack vue+typescript emphasize component composition patterns and performance optimization
 ```
 
 ## Technology Normalization
@@ -74,7 +80,7 @@
 ### Phase 2: Research Execution
 1. **Context7 Query**: 각 기술의 공식 문서 조회
 2. **Combination Analysis**: 기술 간 호환성 및 통합 패턴 분석
-3. **WebSearch Enhancement**: 최신 커뮤니티 정보 및 best practices 수집
+3. **Conditional WebSearch**: Context7에서 충분한 정보를 얻지 못한 경우에만 WebSearch 실행
 4. **Version Compatibility**: 버전 호환성 매트릭스 생성
 
 ### Phase 3: Content Generation
@@ -242,12 +248,17 @@ def categorize_and_sort_technologies(tech_string):
 def generate_tech_stack_guide(normalized_stack):
     # 1. Context7 research for each technology
     individual_docs = []
+    context7_coverage = 0
     for tech in normalized_stack.split('+'):
         doc = context7_get_library_docs(tech)
-        individual_docs.append(doc)
+        if doc and doc.quality_score > 0.7:  # Good quality documentation found
+            individual_docs.append(doc)
+            context7_coverage += 1
     
-    # 2. WebSearch for combination-specific information
-    combination_info = web_search(f"{normalized_stack} integration tutorial best practices")
+    # 2. Conditional WebSearch - only if Context7 coverage is insufficient
+    combination_info = None
+    if context7_coverage < len(normalized_stack.split('+')) * 0.8:  # Less than 80% coverage
+        combination_info = web_search(f"{normalized_stack} integration tutorial best practices")
     
     # 3. Generate compatibility matrix
     compatibility = analyze_version_compatibility(normalized_stack.split('+'))
@@ -257,7 +268,8 @@ def generate_tech_stack_guide(normalized_stack):
         stack=normalized_stack,
         individual_docs=individual_docs,
         combination_info=combination_info,
-        compatibility=compatibility
+        compatibility=compatibility,
+        context7_only=combination_info is None
     )
     
     # 5. Save to appropriate location
@@ -299,6 +311,7 @@ def generate_tech_stack_guide(normalized_stack):
 
 ### Research Failures
 - Context7 unavailable: Use WebSearch and cached information
+- Context7 insufficient coverage: Supplement with targeted WebSearch
 - No integration information found: Generate basic combination guide
 - Version conflicts detected: Highlight conflicts in compatibility matrix
 
