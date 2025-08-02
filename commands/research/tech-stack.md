@@ -78,10 +78,19 @@
 5. **Generate Filename**: 정규화된 순서로 파일명 생성
 
 ### Phase 2: Research Execution
-1. **Context7 Query**: 각 기술의 공식 문서 조회
-2. **Combination Analysis**: 기술 간 호환성 및 통합 패턴 분석
-3. **Conditional WebSearch**: Context7에서 충분한 정보를 얻지 못한 경우에만 WebSearch 실행
-4. **Version Compatibility**: 버전 호환성 매트릭스 생성
+1. **Comprehensive Context7 Research**:
+   - 기본 문서부터 시작하여 의미있는 정보가 발견되는 한 계속 검색
+   - 자연어 요구사항에서 관련 토픽 추출하여 targeted search
+   - 기술별 common patterns (hooks, routing, state management 등) 자동 검색
+   - 중복되거나 의미없는 정보는 필터링
+2. **Cross-Technology Integration Search**:
+   - 다중 기술 조합의 경우 기술 쌍별 통합 문서 검색
+   - 실제 통합 패턴과 best practices 수집
+3. **Information Completeness Evaluation**:
+   - 단순 커버리지 비율이 아닌 정보의 완전성 평가
+   - 요구사항에 대한 답변 가능 여부 확인
+4. **Conditional WebSearch**: 정보가 불완전한 경우에만 WebSearch로 보완
+5. **Version Compatibility**: 버전 호환성 매트릭스 생성
 
 ### Phase 3: Content Generation
 1. **Template Selection**: 기술 조합에 적합한 템플릿 선택
@@ -245,19 +254,58 @@ def categorize_and_sort_technologies(tech_string):
 
 ### Research and Content Generation
 ```python
-def generate_tech_stack_guide(normalized_stack):
-    # 1. Context7 research for each technology
+def generate_tech_stack_guide(normalized_stack, natural_language_requirements=None):
+    # 1. Comprehensive Context7 research - continue until sufficient information is found
     individual_docs = []
     context7_coverage = 0
+    
     for tech in normalized_stack.split('+'):
+        # Keep searching until we have meaningful documentation
+        explored_topics = set()
+        
+        # Start with basic documentation
         doc = context7_get_library_docs(tech)
-        if doc and doc.quality_score > 0.7:  # Good quality documentation found
+        if doc and doc.quality_score > 0.7:
             individual_docs.append(doc)
             context7_coverage += 1
+        
+        # Extract relevant topics from natural language requirements
+        if natural_language_requirements:
+            relevant_topics = extract_relevant_topics(natural_language_requirements, tech)
+            
+            # Search for each relevant topic until we have comprehensive coverage
+            for topic in relevant_topics:
+                if topic not in explored_topics:
+                    topic_doc = context7_get_library_docs(tech, topic=topic)
+                    if topic_doc and topic_doc.quality_score > 0.6 and topic_doc.adds_new_information(individual_docs):
+                        individual_docs.append(topic_doc)
+                        explored_topics.add(topic)
+        
+        # For common integration patterns, search additional contexts
+        if tech in ['react', 'vue', 'angular']:
+            for pattern in ['hooks', 'components', 'state management', 'routing']:
+                if pattern not in explored_topics:
+                    pattern_doc = context7_get_library_docs(tech, topic=pattern)
+                    if pattern_doc and pattern_doc.quality_score > 0.6:
+                        individual_docs.append(pattern_doc)
+                        explored_topics.add(pattern)
     
-    # 2. Conditional WebSearch - only if Context7 coverage is insufficient
+    # 2. Search for cross-technology integration patterns
+    if len(normalized_stack.split('+')) > 1:
+        # Search for specific integration documentation
+        tech_pairs = generate_tech_pairs(normalized_stack.split('+'))
+        for tech1, tech2 in tech_pairs:
+            integration_doc = context7_get_library_docs(
+                f"{tech1} {tech2}", 
+                topic="integration"
+            )
+            if integration_doc and integration_doc.quality_score > 0.6:
+                individual_docs.append(integration_doc)
+    
+    # 3. Conditional WebSearch - only if Context7 doesn't provide comprehensive coverage
     combination_info = None
-    if context7_coverage < len(normalized_stack.split('+')) * 0.8:  # Less than 80% coverage
+    # Evaluate information completeness, not just quantity
+    if not has_comprehensive_coverage(individual_docs, normalized_stack, natural_language_requirements):
         combination_info = web_search(f"{normalized_stack} integration tutorial best practices")
     
     # 3. Generate compatibility matrix
@@ -311,7 +359,8 @@ def generate_tech_stack_guide(normalized_stack):
 
 ### Research Failures
 - Context7 unavailable: Use WebSearch and cached information
-- Context7 insufficient coverage: Supplement with targeted WebSearch
+- Context7 insufficient coverage: Continue searching with different topics until comprehensive
+- Information completeness threshold not met: Supplement with targeted WebSearch
 - No integration information found: Generate basic combination guide
 - Version conflicts detected: Highlight conflicts in compatibility matrix
 
