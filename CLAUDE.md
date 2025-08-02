@@ -36,7 +36,8 @@ Large Task: "Implement user authentication system"
 - Ask clarifying questions about any unclear modifications
 - Transform insights from Q&A discussions into clear, informational comments that help future readers understand the code's purpose and context
 - Test functionality after each meaningful change
-- Use `/review` command for intermediate code reviews
+- Use `git diff` to review changes before proceeding to next steps
+- Request explicit human verification for complex or critical modifications
 
 **Verification Checklist:**
 - [ ] Can I explain what this change does?
