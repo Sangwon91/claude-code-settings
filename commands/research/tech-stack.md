@@ -1,6 +1,10 @@
 # /research:tech-stack
 
-최신 기술 스택 정보를 조사하고 구조화된 가이드를 생성하는 커맨드입니다.
+Command to research latest technology stack information and generate structured guides.
+
+**🔍 RESEARCH PRIORITY**: Context7 Primary → WebSearch Last Resort
+**📝 MANDATORY STEPS**: TODO Generation → Guide Creation → CLAUDE.md Update → Verification
+**⚠️ QUALITY CONTROL**: Latest Version Verification Required
 
 ## Usage
 ```
@@ -77,20 +81,40 @@
 4. **Sort by Priority**: 의미론적 우선순위에 따라 정렬
 5. **Generate Filename**: 정규화된 순서로 파일명 생성
 
-### Phase 2: Research Execution
-1. **Comprehensive Context7 Research**:
-   - 기본 문서부터 시작하여 의미있는 정보가 발견되는 한 계속 검색
-   - 자연어 요구사항에서 관련 토픽 추출하여 targeted search
-   - 기술별 common patterns (hooks, routing, state management 등) 자동 검색
-   - 중복되거나 의미없는 정보는 필터링
-2. **Cross-Technology Integration Search**:
-   - 다중 기술 조합의 경우 기술 쌍별 통합 문서 검색
-   - 실제 통합 패턴과 best practices 수집
-3. **Information Completeness Evaluation**:
-   - 단순 커버리지 비율이 아닌 정보의 완전성 평가
-   - 요구사항에 대한 답변 가능 여부 확인
-4. **Conditional WebSearch**: 정보가 불완전한 경우에만 WebSearch로 보완
-5. **Version Compatibility**: 버전 호환성 매트릭스 생성
+### Phase 2: Research Execution (⚠️ Context7 Priority Policy)
+**🔍 CRITICAL**: Use Context7 as primary source, WebSearch as last resort only
+
+1. **Mandatory TodoWrite Generation**: Generate required TODOs before research begins
+   - "Research [tech-stack] using Context7 as primary source"
+   - "Generate comprehensive guide for [tech-stack] combination"
+   - "Update CLAUDE.md with [tech-stack] guide reference"
+   - "Verify all versions, examples, and compatibility information"
+   - "Re-validate Context7 information and test configurations"
+
+2. **Comprehensive Context7 Research (PRIMARY)**:
+   - Complete investigation of all tech stack components via Context7
+   - Start with basic documentation, continue until meaningful information discovered
+   - Extract relevant topics from natural language requirements for targeted search
+   - Auto-search technology-specific common patterns (hooks, routing, state management, etc.)
+   - Filter out duplicate or meaningless information
+   - Achieve 80%+ Context7 coverage through persistent searching
+
+3. **Cross-Technology Integration Search (Context7 ONLY)**:
+   - For multi-tech combinations, search integration docs for tech pairs via Context7
+   - Collect actual integration patterns and best practices from Context7
+   - Perform additional Context7 searches with "integration" keyword
+
+4. **Information Completeness Evaluation**:
+   - Evaluate information completeness, not just coverage percentage
+   - Verify ability to answer requirements
+   - Assess feasibility of creating complete guide with Context7 info only
+
+5. **WebSearch (LAST RESORT ONLY)**: Only when absolutely impossible with Context7
+   - Use only when Context7 coverage < 70%
+   - When using WebSearch, explicitly state reason and Context7 deficiencies
+   - Validate WebSearch results against Context7 information
+
+6. **Version Compatibility**: Generate latest version compatibility matrix
 
 ### Phase 3: Content Generation
 1. **Template Selection**: 기술 조합에 적합한 템플릿 선택
@@ -107,17 +131,67 @@
 2. **Create/Update**: Create new file or update existing file
 3. **Cross-Reference**: Add cross-reference links between related technology guides
 
-### Phase 5: CLAUDE.md Integration (MANDATORY)
-**⚠️ REQUIRED STEP**: Must update project CLAUDE.md after guide generation
-1. **Check CLAUDE.md**: Verify CLAUDE.md file exists in project root
-2. **Validate Reference**: Check if generated guide reference already exists
-3. **Auto-Update**: Automatically add reference if not present
+### Phase 5: CLAUDE.md Integration (🚨 MANDATORY STEP)
+**⚠️ CRITICAL REQUIREMENT**: CLAUDE.md update required after every guide generation
+
+**Execution Protocol:**
+1. **Pre-Integration Backup**: Create backup before modifying CLAUDE.md
+2. **Check CLAUDE.md**: Verify CLAUDE.md file exists in project root
+3. **Section Creation**: Verify/create Technology Stack Guidelines section
+4. **Duplicate Check**: Check for existing guide reference duplicates
+5. **Auto-Update**: Automatically add reference if no duplicates found
    ```markdown
    ## Technology Stack Guidelines
    @guides/technology-stacks/{normalized-stack}.md
    ```
-4. **Preserve Content**: Maintain all existing content and formatting
-5. **Confirmation**: Notify user of CLAUDE.md update completion
+6. **Content Preservation**: Maintain all existing content and formatting
+7. **Validation**: Verify added reference path is correct and accessible
+8. **Completion Notification**: Notify user of CLAUDE.md update completion
+
+**Error Handling:**
+- CLAUDE.md doesn't exist: Create new file with basic structure
+- Write permission denied: Provide manual addition guidance to user
+- Reference path error: Fix path or regenerate guide
+
+### Phase 6: Verification and Validation Phase (🔍 CRITICAL QUALITY CONTROL)
+**⚠️ MANDATORY FINAL STEP**: Re-verify completeness and accuracy of generated guide
+
+**Version Verification Protocol:**
+1. **Latest Version Cross-Check**: Re-verify current stable versions of all technologies
+   - Re-query Context7 for most recent stable versions of each technology
+   - Compare guide-specified versions with actual current versions
+   - Update guide if version mismatches discovered
+
+2. **Compatibility Matrix Validation**: Re-verify compatibility matrix
+   - Re-confirm inter-technology version compatibility
+   - Re-investigate known conflicts or issues
+   - Identify and reflect breaking changes
+
+3. **Code Example Verification**: Validate code example validity
+   - Check all code examples for syntax errors
+   - Verify configuration file syntax validity
+   - Test executability where possible
+
+4. **Context7 Information Re-validation**: Re-verify Context7 information
+   - Check for changed APIs or deprecated features
+   - Reflect new best practices
+   - Confirm documented configurations are still valid
+
+5. **Integration Pattern Verification**: Re-verify integration patterns
+   - Confirm technology integration methods are still recommended
+   - Search for new integration options or improved methods
+   - Identify deprecated patterns and suggest alternatives
+
+**Quality Assurance Checklist:**
+- [ ] Are all version information based on current latest standards?
+- [ ] Do code examples work with current versions?
+- [ ] Do configuration files follow latest formats?
+- [ ] Are integration patterns current recommended methods?
+- [ ] Is Context7 coverage 80% or higher?
+- [ ] Was CLAUDE.md successfully updated?
+
+**Cost vs Quality Statement:**
+This verification process incurs additional time and computational costs, but is essential to prevent development issues from inaccurate or outdated technical guides.
 
 ## Generated File Structure
 
@@ -149,7 +223,7 @@ guides/technology-stacks/zustand+react+typescript.md
 - **Technologies**: {tech1} + {tech2} + {tech3}
 - **Use Case**: {template-type}
 - **Complexity**: {beginner|intermediate|advanced}
-- **Last Updated**: {YYYY-MM-DD}
+- **Last Updated**: {current-date}
 
 ## Compatibility Matrix
 | Technology | Version | Notes | Conflicts |
@@ -210,7 +284,7 @@ guides/technology-stacks/zustand+react+typescript.md
 ## Research Metadata
 - **Research Sources**: Context7, Official Docs, Community
 - **Validation Status**: {verified|partial|unverified}
-- **Next Review**: {6-months-from-creation}
+- **Next Review**: {6-months-from-creation-date}
 ```
 
 ## Execution Logic
@@ -318,11 +392,18 @@ def generate_tech_stack_guide(normalized_stack, natural_language_requirements=No
             if integration_doc and integration_doc.quality_score > 0.6:
                 individual_docs.append(integration_doc)
     
-    # 3. Conditional WebSearch - only if Context7 doesn't provide comprehensive coverage
+    # 3. Context7 Coverage Evaluation - Target 80%+ achievement
+    context7_coverage = calculate_context7_coverage(individual_docs, normalized_stack)
+    
+    # 4. Conditional WebSearch - Use minimally only when Context7 coverage < 70%
     combination_info = None
-    # Evaluate information completeness, not just quantity
-    if not has_comprehensive_coverage(individual_docs, normalized_stack, natural_language_requirements):
+    websearch_reason = ""
+    
+    if context7_coverage < 0.7 or not has_comprehensive_coverage(individual_docs, normalized_stack, natural_language_requirements):
+        websearch_reason = f"Context7 coverage: {context7_coverage:.1%}, insufficient for comprehensive guide"
         combination_info = web_search(f"{normalized_stack} integration tutorial best practices")
+        # Validate WebSearch results with Context7 information
+        combination_info = validate_with_context7(combination_info, individual_docs)
     
     # 3. Generate compatibility matrix
     compatibility = analyze_version_compatibility(normalized_stack.split('+'))
@@ -373,12 +454,13 @@ def generate_tech_stack_guide(normalized_stack, natural_language_requirements=No
 - Suggest similar or commonly confused alternatives
 - Place unknown technologies in 'utility' category
 
-### Research Failures
-- Context7 unavailable: Use WebSearch and cached information
-- Context7 insufficient coverage: Continue searching with different topics until comprehensive
-- Information completeness threshold not met: Supplement with targeted WebSearch
-- No integration information found: Generate basic combination guide
-- Version conflicts detected: Highlight conflicts in compatibility matrix
+### Research Failures (Context7 Priority Policy)
+- **Context7 unavailable**: Retry then use WebSearch minimally
+- **Context7 insufficient coverage**: Continue Context7 searching with various topics
+- **Information completeness threshold not met**: Additional Context7 search then WebSearch if unavoidable
+- **Insufficient integration info in Context7**: Generate basic combination guide then minimal WebSearch supplement
+- **Version conflicts detected**: Highlight conflicts in compatibility matrix
+- **When using WebSearch**: Always specify Context7 deficiency reason and limit usage scope
 
 ### File Conflicts
 - Existing file: Offer to update or create variant
@@ -410,5 +492,26 @@ def generate_tech_stack_guide(normalized_stack, natural_language_requirements=No
 
 **Exception Handling:**
 - If CLAUDE.md doesn't exist: Create new file
-- If reference already exists: Do not add duplicate
+- If reference already exists: Do not add duplicate  
 - If file modification permission denied: Guide user for manual addition
+
+## TODO Generation Template (MANDATORY)
+
+Every `/research:tech-stack` execution must generate the following TODO list:
+
+```markdown
+### Technology Stack Research TODOs
+1. **Research Phase**: "Research {tech-stack} using Context7 as primary source (target: 80%+ coverage)"
+2. **Guide Generation**: "Generate comprehensive guide for {tech-stack} combination"
+3. **CLAUDE.md Integration**: "Update CLAUDE.md with {tech-stack} guide reference (MANDATORY)"
+4. **Version Verification**: "Verify all versions against current latest releases"
+5. **Quality Validation**: "Re-validate Context7 information and test all configurations"
+6. **Final Review**: "Complete verification checklist and ensure guide accuracy"
+```
+
+**Cost vs Quality Commitment:**
+This process requires additional computational cost and time, but is essential for providing accurate and up-to-date technical information.
+- Context7 priority usage ensures official documentation-based accuracy
+- Latest version verification ensures development environment compatibility
+- Automatic CLAUDE.md updates maintain project consistency
+- Re-verification phase ensures guide quality
