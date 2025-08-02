@@ -42,6 +42,43 @@ Modifying too large amounts of code makes it impossible to track how the code is
 ### Utilities
 - **Project Stack Detection**: @commands/setup/detect-stack.md
 
+### Technology Stack Guidelines
+- **React + TypeScript + Vite**: @guides/technology-stacks/react+typescript+vite.md
+- **React + TypeScript + Vite + shadcn/ui**: @guides/technology-stacks/react+typescript+vite+shadcn-ui.md
+
+## 🛠️ Technology Stack Management
+
+### Current Technology Information Requirements
+**⚠️ CRITICAL**: When working with any technology stack, always verify you're using the latest compatible versions and best practices.
+
+#### Context7 Integration for Latest Documentation
+- **Always check latest documentation** using context7 tools before implementing any technology-specific patterns
+- **Verify compatibility matrices** between different technologies in your stack
+- **Cross-reference** official documentation with community best practices
+
+#### Version Management Protocol
+When detecting version mismatches between project dependencies and latest available versions:
+
+1. **Identify the mismatch**: Compare project versions against latest stable releases
+2. **Assess impact**: Determine if the version difference affects functionality, security, or performance
+3. **Consult with user**: Present clear options and implications
+   - **Option A**: Update project to latest versions (requires testing and potential refactoring)
+   - **Option B**: Continue with current versions (document any limitations or security considerations)
+   - **Option C**: Selective updates (update only critical components)
+
+#### Technology Information Validation
+- **Use context7** to fetch latest official documentation for any technology in your stack
+- **Verify breaking changes** between versions before suggesting updates
+- **Document dependencies** and their version constraints clearly
+- **Test compatibility** before committing to version updates
+
+#### Project Technology Alignment
+Before implementing any feature:
+- [ ] Check if project uses latest stable versions
+- [ ] Identify any deprecated patterns or outdated practices
+- [ ] Propose updates when beneficial for security, performance, or maintainability
+- [ ] Respect user preferences for maintaining current versions when explicitly requested
+
 ---
 
 **This approach ensures that AI-assisted development remains transparent, verifiable, and maintainable while maximizing the benefits of AI acceleration.**
