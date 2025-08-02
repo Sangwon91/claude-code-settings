@@ -37,7 +37,7 @@ Modifying too large amounts of code makes it impossible to track how the code is
 ### Development Practices
 - **Environment Setup**: @guides/development-practices/env-local.md
 - **Testing Strategy**: @guides/development-practices/testing-strategy.md
-- **Technology Stack Guide Creation**: @guides/development-practices/stack-instruction-guide.md
+- **Technology Stack Command Guide**: @guides/development-practices/tech-stack-command-guide.md
 
 ### Utilities
 - **Project Stack Detection**: @commands/setup/detect-stack.md
