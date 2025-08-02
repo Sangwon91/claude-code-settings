@@ -99,9 +99,25 @@
 4. **Configuration Files**: 통합 설정 파일 템플릿 제공
 
 ### Phase 4: File Management
-1. **Check Existing**: 동일한 조합의 기존 파일 확인
-2. **Create/Update**: 새 파일 생성 또는 기존 파일 업데이트
-3. **Cross-Reference**: 관련 기술 가이드 간 상호 참조 링크 추가
+1. **Check Existing**: Check for existing file with same technology combination
+   - If existing file found: Prompt user with options
+     - **Update**: Update existing file with latest information
+     - **Skip**: Stop research and keep existing file
+     - **Create Variant**: Create new file with date/version suffix
+2. **Create/Update**: Create new file or update existing file
+3. **Cross-Reference**: Add cross-reference links between related technology guides
+
+### Phase 5: CLAUDE.md Integration (MANDATORY)
+**⚠️ REQUIRED STEP**: Must update project CLAUDE.md after guide generation
+1. **Check CLAUDE.md**: Verify CLAUDE.md file exists in project root
+2. **Validate Reference**: Check if generated guide reference already exists
+3. **Auto-Update**: Automatically add reference if not present
+   ```markdown
+   ## Technology Stack Guidelines
+   @guides/technology-stacks/{normalized-stack}.md
+   ```
+4. **Preserve Content**: Maintain all existing content and formatting
+5. **Confirmation**: Notify user of CLAUDE.md update completion
 
 ## Generated File Structure
 
@@ -378,9 +394,21 @@ def generate_tech_stack_guide(normalized_stack, natural_language_requirements=No
 /research:tech-stack react+typescript+vite  # generates comprehensive guide
 ```
 
-### CLAUDE.md Integration
-자동으로 생성된 가이드를 프로젝트 CLAUDE.md에 참조 추가:
-```markdown
-## Technology Stack Guidelines
-@guides/technology-stacks/react+typescript+vite.md
-```
+### CLAUDE.md Integration (MANDATORY)
+**⚠️ REQUIRED EXECUTION**: Automatically add reference to project CLAUDE.md after every guide generation
+
+**Execution Procedure:**
+1. Check for existence of CLAUDE.md file in project root
+2. Verify/create Technology Stack Guidelines section
+3. Check existing references to prevent duplicates
+4. Automatically add new guide reference:
+   ```markdown
+   ## Technology Stack Guidelines
+   @guides/technology-stacks/{normalized-stack}.md
+   ```
+5. Display completion confirmation message to user
+
+**Exception Handling:**
+- If CLAUDE.md doesn't exist: Create new file
+- If reference already exists: Do not add duplicate
+- If file modification permission denied: Guide user for manual addition
