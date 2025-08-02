@@ -34,7 +34,7 @@ Large Task: "Implement user authentication system"
 **For every code modification:**
 - Review each change immediately after implementation
 - Ask clarifying questions about any unclear modifications
-- Document Q&A results as informational comments in the code
+- Transform insights from Q&A discussions into clear, informational comments that help future readers understand the code's purpose and context
 - Test functionality after each meaningful change
 - Use `/review` command for intermediate code reviews
 
