@@ -1,5 +1,14 @@
 # Claude Code Development Guidelines
 
+## Core Principles
+
+### Essential Guidelines for Safe AI-Assisted Development
+- **Plan First**: Always use TodoWrite to decompose complex tasks into verifiable steps
+- **Verify Continuously**: Review and test each change before proceeding to the next
+- **Seek Approval**: Consult with users before executing any git state changes or complex modifications
+- **Document Intent**: Write self-explanatory code with comments that explain the reasoning behind decisions
+- **Preserve Control**: Maintain human oversight throughout the development process
+
 ## 1. Preventing Massive Code Modifications Without Verification
 
 ### Core Problem
@@ -35,8 +44,6 @@ Large Task: "Implement user authentication system"
 - Review each change immediately after implementation
 - Ask clarifying questions about any unclear modifications
 - Transform insights from Q&A discussions into clear, informational comments that help future readers understand the code's purpose and context
-- Test functionality after each meaningful change
-- Use `git diff` to review changes before proceeding to next steps
 - Request explicit human verification for complex or critical modifications
 
 **Verification Checklist:**
@@ -86,21 +93,61 @@ counter++;
 
 ### Claude Code Specific Implementation
 
-#### Mandatory Tool Usage Patterns
+#### Complete Workflow Example
+**Scenario: Adding a new feature to an existing project**
+
+**Step 1: Planning Phase**
 ```
-1. TodoWrite → Plan all complex tasks
-2. Read → Understand existing code before modification  
-3. Edit/MultiEdit → Make small, focused changes
-4. Bash → Run tests after each meaningful change
-5. TodoWrite → Update progress immediately
+1. TodoWrite → Create task breakdown
+2. Read/Glob → Explore codebase structure 
+3. Grep → Find similar implementations for reference
+4. TodoWrite → Update plan with discovered information
 ```
 
+**Step 2: Implementation Phase**
+```
+1. Read → Understand target files before modification
+2. Edit/MultiEdit → Make incremental changes (20-30 lines max)
+3. git diff → Review changes immediately
+4. Bash → Run tests after each logical unit
+5. TodoWrite → Mark subtask complete, move to next
+```
+
+**Step 3: Verification Phase**
+```
+1. Bash → Run full test suite
+2. git status → Check all changes are tracked
+3. git diff → Final review before commit
+4. git commit → Commit with descriptive message
+5. TodoWrite → Mark main task complete
+```
+
+#### Tool Usage Patterns
+- **Batch operations**: Read multiple files simultaneously when exploring
+- **MultiEdit over Edit**: Combine related changes to same file
+- **Progress tracking**: Update TodoWrite status immediately after each completion
+
+#### Testing and Verification Strategy
+**Testing Workflow:**
+- **Before starting**: Run existing tests to establish baseline
+- **During development**: Test each logical unit after implementation
+- **Before committing**: Execute full test suite to ensure no regressions
+- **On test failures**: Analyze, fix, and re-test before proceeding
+
+**Code Review Protocol:**
+- Use `git diff` to review changes before proceeding to next steps
+- Verify changes follow existing code patterns and conventions
+- Ensure modifications align with project goals
+
 #### Git Workflow Integration
+**Branch Strategy:**
 - Create feature branches for any non-trivial changes
-- Commit after completing each subtask (not just at the end)
-- Use descriptive commit messages that explain the "why"
-- Run tests before each commit
-- Use `git diff` to review changes before committing
+- Use descriptive branch names that reflect the feature or fix
+
+**Commit Strategy:**
+- Commit after completing each logical subtask (maintains granular history)
+- Use descriptive commit messages that explain the "why" behind changes
+- Each commit should represent a working, testable state
 
 #### Error Recovery Procedures
 **When things go wrong:**
@@ -136,8 +183,10 @@ counter++;
 ### Emergency Protocols
 **If you find yourself:**
 - Making changes you don't fully understand → STOP and ask questions
-- Modifying more than 50 lines without verification → Break into smaller tasks
-- Getting test failures you can't explain → Revert and re-approach
+- Modifying more than 30 lines without verification → Break into smaller tasks
+- Getting test failures you can't explain → Use git recovery protocol to revert
 - Feeling lost in the codebase → Use TodoWrite to reorganize and refocus
+
+**Note**: The 30-line limit aligns with the subtask sizing guideline for consistent change management.
 
 This approach ensures that AI-assisted development remains transparent, verifiable, and maintainable while maximizing the benefits of AI acceleration.
