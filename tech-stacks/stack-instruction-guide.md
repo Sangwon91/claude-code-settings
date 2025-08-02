@@ -115,17 +115,8 @@ Enable agents to generate up-to-date, project-specific technology stack instruct
 ## File Management Strategy
 
 ### Location Selection Logic
-```bash
-# Working from ~/.claude/ directory
-→ Save to ~/.claude/tech-stacks/ (global instructions)
-
-# Working from project/.claude/ directory  
-→ Save to project/.claude/tech-stacks/ (project-specific instructions)
-
-# Auto-detection based on current working directory
-→ Check if .claude/ exists in current directory
-→ Fallback to ~/.claude/ if no project structure found
-```
+All technology stack instructions should be saved to:
+- `~/.claude/tech-stacks/` (global instructions accessible to all projects)
 
 ### Naming Conventions
 **Consistent file naming for easy discovery:**
